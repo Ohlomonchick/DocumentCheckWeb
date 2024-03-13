@@ -4,76 +4,31 @@
 {% bulma %}
 {% font_awesome %}
 {% load static %}
-    <title>Киберполигон</title>
+    <title>DockCheck</title>
 <link rel="shortcut icon" type="image/png" href="{% static 'icons/letter-k.png' %}"/>
-<!-- ... -->
+    <style>
+        /* Custom styles for button alignment and form spacing */
+        .form-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centers the button */
+            padding: 20px; /* Adds more space around the form */
+        }
+        .button-wrapper {
+            margin-top: 20px; /* Adds space above the button */
+            width: 100%; /* Ensures the wrapper takes the full width of its parent */
+            display: flex;
+            justify-content: center; /* Centers the button horizontally */
+        }
+    </style>
 </head>
 
 <nav class="navbar is-black" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item">
-      <h1><strong>КИБЕРПОЛИГОН</strong></h1>
+      <h1 class="title is-1 has-text-white"><strong>DOCS CHECK</strong></h1>
     </a>
-
-{#    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">#}
-{#      <span aria-hidden="true"></span>#}
-{#      <span aria-hidden="true"></span>#}
-{#      <span aria-hidden="true"></span>#}
-{#    </a>#}
   </div>
-
-{#  <div id="navbarBasicExample" class="navbar-menu">#}
-    <div class="navbar-start">
-      {% if  user.is_authenticated %}
-      <a class="navbar-item" href="{% url 'interface:lab-list' %}">
-      {% else %}
-      <a class="navbar-item" href="{% url 'reg' %}">
-      {% endif %}
-        Главная
-      </a>
-
-      {% if user.is_authenticated %}
-        <a class="navbar-item" href="{% url 'interface:competition-list' %}">
-          Соревнования
-        </a>
-      {% endif %}
-      
-      {% if user.is_superuser %}
-        <a class="navbar-item" href = "{% url 'interface:platoon-list' %}">
-          Список взводов
-        </a>
-      {% endif %}
-    </div>
-
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-            {% if user.is_authenticated %}
-                {% if user.is_superuser %}
-                    <a class="button is-light" href="{% url 'admin:index' %}">
-                        <strong>Админ-панель</strong>
-                    </a>
-                {% else %}
-                  <a class="button is-light" href="{% url 'ch_pass' %}">
-                    <strong>Сменить пароль</strong>
-                  </a>
-                {% endif %}
-                <form class="m-0" method="post" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button class="button is-light" type="submit"><strong>Выйти</strong></button>
-                </form>
-            {% else %}
-              <a class="button is-primary" href="{% url 'reg' %}">
-                <strong>Войти как участник</strong>
-              </a>
-              <a class="button is-light" href="{% url 'login' %}">
-                <strong>Войти как администратор</strong>
-              </a>
-            {% endif %}
-        </div>
-      </div>
-    </div>
-{#  </div>#}
 </nav>
 
 
@@ -90,7 +45,7 @@
 <footer class="footer mt-auto">
   <div class="content has-text-centered">
     <p>
-      Разработано в <strong>ВУЦ НИУ ВШЭ</strong>
+      Разработал <strong>Дмитрий Проскурин</strong>, студент ФКН ВШЭ
     </p>
   </div>
 </footer>

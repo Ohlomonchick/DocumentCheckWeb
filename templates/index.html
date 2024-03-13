@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+
+<div class="columns is-centered is-flex is-vcentered">
+    <div class="column is-one-third is-flex">
+        <div class="form-wrapper">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="file has-name is-boxed">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="file" onchange="updateFileName(this)">
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label">
+                                Выберете .docx
+                            </span>
+                        </span>
+                        <span class="file-name">
+                            Файл не выбран
+                        </span>
+                    </label>
+                </div>
+                {% if form.file.errors %}
+                            <p class=" help is-danger">{{ form.file.errors.as_text }}</p>
+                {% endif %}
+                <div class="button-wrapper">
+                    <button class="button is-dark" type="submit">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <script>
+    function updateFileName(input) {
+        var fileName = input.files && input.files.length > 0 ? input.files[0].name : '';
+        var fileNameElement = input.closest('.file').querySelector('.file-name');
+        if (fileName) {
+            fileNameElement.textContent = fileName;
+            fileNameElement.style.display = ''; // Show the file name
+        } else {
+            fileNameElement.textContent = 'Файл не выбран';
+            fileNameElement.style.display = 'none'; // Hide if no file is selected
+        }
+    }
+</script>
+{% endblock %}
