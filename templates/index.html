@@ -3,10 +3,13 @@
 {% load static %}
 
 {% block content %}
-
-
-<div class="columns is-centered is-flex is-vcentered">
-    <div class="column is-one-third is-flex">
+<div class="columns is-centered is-flex is-vcentered is-centered">
+    <div class="column is-one-third is-narrow is-justify-content-center is-align-items-center">
+    {% if messages %}
+    <h1 class="title has-text-centered">Загрузить ещё один документ</h1>
+    {% else %}
+        <h1 class="title has-text-centered">Загрузите документ</h1>
+    {% endif %}
         <div class="form-wrapper">
             <form id="uploadForm" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -39,6 +42,37 @@
         </div>
     </div>
 </div>
+
+        {% if messages  %}
+    <div class="columns is-centered">
+        <div class="column is-three-quarters">
+            <table class="table is-hoverable is-bordered">
+                  <thead>
+                    <tr>
+                        <th>Место</th>
+                        <th>Стандарт</th>
+                        <th>Ошибка</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for message in messages %}
+                    <tr>
+                    {% if message.message_type == 1 %}
+                        <th class="has-background-warning-light" >{{ message.position }}</th>
+                    {% else %}
+                        <th class="has-background-danger-light" >{{ message.position }}</th>
+                    {% endif %}
+
+                      <td>{{ message.standard }}</td>
+                        <td>{{ message.message }}</td>
+                    </tr>
+                  {% endfor  %}
+              </tbody>
+            </table>
+        </div>
+
+    </div>
+    {% endif %}
 
     <script>
         document.getElementById('uploadForm').addEventListener('submit', function() {
