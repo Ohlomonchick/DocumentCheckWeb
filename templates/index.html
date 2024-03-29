@@ -32,6 +32,21 @@
                 {% if form.file.errors %}
                             <p class=" help is-danger">{{ form.file.errors.as_text }}</p>
                 {% endif %}
+
+                <!-- DocType ChoiceField -->
+                <div class="field">
+                    <label class="label" for="{{ form.doc_type.id_for_label }}">Тип документа</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            {{ form.doc_type }}
+                        </div>
+                    </div>
+                    {% if form.doc_type.errors %}
+                        <p class="help is-danger">{{ form.doc_type.errors|first }}</p>
+                    {% endif %}
+                </div>
+
+
                 <div class="button-wrapper">
                     <button class="button is-dark" type="submit">Upload</button>
                 </div>

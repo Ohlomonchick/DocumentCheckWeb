@@ -9,13 +9,13 @@ import os
 from interface.models import *
 
 
-def handle_uploaded_file(file):
+def handle_uploaded_file(file, category: str):
     doc_path = os.path.join(settings.MEDIA_ROOT, file._name)
     with open(doc_path, "wb") as destination:
         for chunk in file.chunks():
             destination.write(chunk)
 
-    verdict = run_check(doc_path)
+    verdict = run_check(doc_path, doc_type=category)
     verdict_db = Verdict.objects.create(name=file._name)
     messages_db = []
     for message in verdict.messages:
@@ -36,11 +36,13 @@ def handle_uploaded_file(file):
 
 
 def upload_file(request, pk=None):
+    context = {}
+
     if request.method == "POST":
-        print("lalala")
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            pk = handle_uploaded_file(request.FILES["file"])
+            category = request.POST.get('doc_type', None)
+            pk = handle_uploaded_file(request.FILES["file"], category)
             return redirect(f"/{pk}")
     else:
         form = UploadFileForm()
