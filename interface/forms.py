@@ -1,12 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from docsCheck.checker import allowed_checkers
+from docsCheck.checker import full_allowed_checkers_name
 
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
     doc_type = forms.ChoiceField(
-        choices=tuple([(key, key) for key in allowed_checkers.keys()])
+        choices=tuple([(key, value) for key, value in full_allowed_checkers_name.items()])
     )
 
     def clean_file(self):
