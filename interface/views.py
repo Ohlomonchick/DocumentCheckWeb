@@ -4,6 +4,7 @@ from django.conf import settings
 from .forms import UploadFileForm
 from docsCheck.runners import run_check
 from docsCheck.utils import MessageTypes
+from django.contrib import messages as global_messages
 import time
 import os
 from interface.models import *
@@ -40,10 +41,12 @@ def upload_file(request, pk=None):
 
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
+
         if form.is_valid():
             category = request.POST.get('doc_type', None)
             pk = handle_uploaded_file(request.FILES["file"], category)
             return redirect(f"/{pk}")
+        context = {"form": form}
     else:
         form = UploadFileForm()
         context = {"form": form}
