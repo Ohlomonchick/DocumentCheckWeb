@@ -44,8 +44,11 @@ def upload_file(request, pk=None):
 
         if form.is_valid():
             category = request.POST.get('doc_type', None)
-            pk = handle_uploaded_file(request.FILES["file"], category)
-            return redirect(f"/{pk}")
+            try:
+                pk = handle_uploaded_file(request.FILES["file"], category)
+                return redirect(f"/{pk}")
+            except RuntimeError:
+                form.add_error("file", "Ошибка во время анализа. Возможно, файл повреждён.")
         context = {"form": form}
     else:
         form = UploadFileForm()
